@@ -1,0 +1,968 @@
+\documentclass{article} 
+\usepackage{amsmath}  
+\usepackage{amsthm, amssymb}
+\usepackage[a4paper,left=25mm,right=25mm,top=30mm,bottom=30mm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumerate}
+\usepackage{graphicx} 
+\usepackage[dvipsnames]{xcolor}
+\usepackage{transparent} 
+\usepackage{parskip}
+\usepackage{tikz} 
+\usepackage{cancel}
+\usepackage[condensed,light,math]{iwona}
+\usepackage[T1]{fontenc}
+
+\title{combinatorics exercises} 
+\author{emilianna monami louise limlengco} 
+\date{\today} 
+
+\fboxsep=4pt
+\renewcommand{\footnoterule}{\vfill\kern-3pt \hrule width 0.4\columnwidth\kern2.6pt} %yoinked from LSE
+\renewcommand{\labelitemi}{$\rightarrow$}
+\renewcommand{\labelenumi}{\colorbox{pink}{\textbf{\arabic{enumi}}}}
+\renewcommand{\labelenumii}{\transparent{0.5}\colorbox{CornflowerBlue}{\transparent{1.0}\textbf{\alph{enumii}}}}
+
+\newcommand{\multibinom}[2]{
+  \left(\!\!\middle(\genfrac{}{}{0pt}{}{#1}{#2}\middle)\!\!\right)} %yoinked from LSE
+
+\newenvironment{solution}
+  {\renewcommand\qedsymbol{$\blacksquare$}\begin{proof}[Solution]}
+  {\end{proof}}
+
+\begin{document} 
+
+\section*{How to Use this Reviewer}
+Hello! This is a compilation of solved exercises for module 4 of MATH 51.3. All of these exercises are taken straight from sir Aldrich's course notes, so you can expect tests 
+to be very similar to the items given. However, there are certain items that are much more difficult than what he expects us to do, and are mostly for nerds like me to geek out about 
+on documents like these. I'll note when these items show up, so that you don't spend energy that you don't really need or want to trying to understand them.\par Normal items will look like this:\begin{enumerate} 
+    \item A very easy math problem. What's 1 + 1?
+\end{enumerate} 
+whereas difficult problems will be soulless, like this:\begin{enumerate}\setcounter{enumi}{1}
+    \renewcommand{\labelenumi}{\fcolorbox{magenta}{white}{\textbf{\arabic{enumi}}}}
+    \item A very difficult math problem. Prove that $\displaystyle \binom{2n}{n} < 2^{2n-2},~\forall n \geq 5$ using induction. 
+\end{enumerate} I might also include warnings in my \textbf{Nerd Interjections!}\par
+\parindent=25pt \begin{minipage}[t]{.14\textwidth}
+    \vspace{0pt}
+    \includegraphics[width=2cm]{nerd_maddy.png} 
+\end{minipage}%
+\fbox{
+\begin{minipage}[t]{.76\textwidth}
+    \vspace{0pt}
+    \textbf{Nerd Interjection!}\footnote{Image from @Ellem\_\_ on Twitter.} These sections are for me to remind you of some necessary information to solve the problems, elaborate on 
+    something that I think isn't all that clear with just pure math symbols, give a helpful theorem, be an annoying piece of shit, anything, really! Just think of it as a tips and tricks section. 
+\end{minipage}%
+}\parindent=0pt \par I also have another section called \textbf{Can we Prove it?} (unfortunately lacking a cute picture to go along with it), where I include some interesting, not really necessary, but 
+nonetheless relevant proofs. So far, these two are my only two gimmicks, but I might add more in the future.\par
+\fbox{\begin{minipage}[t]{0.98\textwidth}
+    \vspace{0pt} 
+    \textbf{Can we Prove it?} This is just a random proof I yoinked from our homeworks.\begin{proof} 
+        ($ \implies $) Let $ x \in (A \cap B) \setminus C $. Then, $ x \in (A \cap B)$ and $ x \notin C $. \\
+        \phantom{($ \implies $)} Since $x \in (A \cap B)$, $ x \in A$ and $ x \in B$. \\
+        \phantom{($ \implies $)} Since $x \in A$ and $x \notin C$, $x \in (A \setminus C) $. \\
+        \phantom{($ \implies $)} Since $x \in B$ and $x \notin C$, $x \in (B \setminus C) $. \\
+        \phantom{($ \implies $)} Thus, $x \in (A \setminus C) \cap (B \setminus C) $. \\ 
+        \\
+        ($ \impliedby $) Let $ x \in (A \setminus C) \cap (B \setminus C) $. Then, $ x \in (A \setminus C) $ and $ x \in (B \setminus C) $. \\ 
+        \phantom{($ \impliedby $)} Since $ x \in (A \setminus C) $, $ x \in A $ and $ x \notin C $. \\
+        \phantom{($ \impliedby $)} Since $ x \in (B \setminus C) $, $ x \in B $ and $ x \notin C $. \\
+        \phantom{($ \impliedby $)} Since $ x \in A $ and $ x \in B $, $ x \in (A \cap B) $. \\
+        \phantom{($ \impliedby $)} Thus, $ x \in (A \cap B) \setminus C $. \\
+        \\ 
+        Since both sides of the conditional are true, it holds that $ (A \cap B) \setminus C = (A \setminus C) \cap (B \setminus C) $. 
+    \end{proof} 
+\end{minipage}%
+}\par
+Finally, there are blue boxes to indicate when instructions aren't obvious from the question itself, or if there are similar items that can be grouped together.\par
+\parindent=25pt \transparent{0.5}
+    \colorbox{CornflowerBlue}{
+    \transparent{1.0}
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        For items \#7 to \#12, we need to reevaluate our life decisions.
+    \end{minipage}
+    }\transparent{1.0}\parindent=0pt \par 
+It's very important to note that this is a \textit{work in progress!} I am human, and I will make mistakes, and I cannot finish doing all the exercises within the span of one day. If you spot anything wrong, 
+please feel free to message me; I will correct it as soon as possible.\par
+As a final note, these are not replacements for the modules/paying attention in class, these are supplements for them. I won't explain all the topics here, and I'll assume that you at least have 
+read the basics, so don't treat these reviewers as your only source of information. Sir Aldrich spends a lot of time on his handouts, they're really good! (except when they're wrong) With that, though, I think 
+I've covered all pertinent points. Good luck, and happy studying!
+\pagebreak 
+\section*{4.1.1: Generating Functions and Power Series} 
+\textit{Series can be scary (especially after calculus) but don't worry! We won't be asked to solve for the radius of convergence or anything like that, since we only care about the coefficients.}\par
+\transparent{0.5}
+\parindent=25.0pt \colorbox{CornflowerBlue}{
+\transparent{1.0}%
+\begin{minipage}[c]{0.9\textwidth}
+    \centering
+    For items \#1 to \#6, we need to express the generating function for the following sequences in a closed form, i.e.\ \textit{without} an 
+    infinite series. 
+\end{minipage}%
+}%
+\transparent{1.0}
+\begin{enumerate} 
+    \item 5, 5, 5, 5, 5, \ldots\par 
+    \textit{Solution.} The generating function for the sequence is given by\begin{align*} 
+        5 + 5x + 5x^2 + 5x^3 + 5 x^4 + \cdots &= 5 (1 + x + x^2 + x^3 + x^4 + \cdots)  \\             
+        &= 5 \cdot \sum_{n=0}^{\infty} x^n = \frac{5}{1-x}. \tag*{$\blacksquare$} 
+    \end{align*} 
+    \item 0, 0, 1, 1, 1, 1, \ldots\par 
+    \textit{Solution.} The generating function for the sequence is given by\begin{align*} 
+        0 + 0x + x^2 + x^3 + x^4 + x^5 + \cdots &= (1 + x + x^2 + x^3 + x^4 + x^5 + \cdots) - 1 - x \\ 
+        &= \sum_{n=0}^{\infty} x^{n} - 1 - x = \frac{1}{1-x} - 1 - x \\ 
+        &= \frac{1-(1-x)-x(1-x)}{1-x} = \frac{x^2}{1-x}.\tag*{$\blacksquare$} \\
+        \intertext{\textit{Solution.} Alternatively, the generating function for the sequence is given by} 
+        0 + 0x + x^2 + x^3 + x^4 + x^5 + \cdots &= \sum_{n=0}^{\infty} x^{n+2} = x^2 \cdot \sum_{n=0}^{\infty} x^n = \frac{x^2}{1-x}. \tag*{$\blacksquare$}
+    \end{align*} 
+    \item 0, 1, 2, 4, 8, 16, 32, \ldots\par
+    \textit{Solution.} The generating function for the sequence is given by\begin{align*} 
+        0 + x + 2x^2 + 4x^3 + 8x^4 + 16x^5 + \cdots &= \frac{1}{2}(1 + 2x + 4x^2 + 8x^3 + 16x^4 + \cdots) - \frac{1}{2} \\ 
+        &= \frac{1}{2} \sum_{n=0}^{\infty} {(2x)}^n - \frac{1}{2} = \frac{1}{2(1-2x)} - \frac{1}{2} \\ 
+        &= \frac{1-(1-2x)}{2(1-2x)} = \frac{x}{1-2x}. \tag*{$\blacksquare$} \\ 
+        \intertext{\textit{Solution.} Alternatively, the generating function for the sequence is given by}
+        0 + x + 2x^2 + 4x^3 + 8x^4 + 16x^5 + \cdots &= \sum_{n=0}^{\infty} 2^n x^{n+1} = x \cdot \sum_{n=0}^{\infty} {(2x)}^n = \frac{x}{1-2x}. \tag*{$\blacksquare$}
+    \end{align*} 
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} These two problems show us that we generally have two options when dealing with sequences and generating functions: we can either (a) work 
+        with the terms themselves and try to make the basic geometric series appear or (b) find a series to represent all the terms and work from there instead. Use whichever one
+        you find easier! Personally, I could go with either way. Just remember, longer $\neq$ harder (that could be real life advice too \textit{hehe}).  
+    \end{minipage}%
+    }
+    \item 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, \ldots\par
+    \textit{Solution.} The generating function for the sequence is given by\begin{align*} 
+        1 + 0x + 0x^2 + x^3 + 0x^4 + 0x^5 + x^6 + \cdots &= {(x^3)}^0 + {(x^3)}^1 + {(x^3)}^2 + {(x^3)}^3 + \cdots \\ 
+        &= \sum_{n=0}^{\infty} {(x^3)}^n = \frac{1}{1-x^3}. \tag*{$\blacksquare$}
+    \end{align*} 
+    \item 1, 2, 3, 1, 2, 3, 1, 2, 3, \ldots\par 
+    \textit{Solution.} The generating function for the sequence is given by\begin{align*} 
+        1 + 2x + 3x^2 + x^3 + 2x^4 + 3x^5 + \cdots &= (1 + 2x + 3x^2) + (x^3 + 2x^4 + 3x^5) \\
+        &\phantom{=}\ + (x^6 + 2x^7 + 3x^8) + \cdots \\ 
+        &= 1(1 + 2x + 3x^2) + x^3(1 + 2x + 3x^2) \\
+        &\phantom{=}\ + x^6(1 + 2x + 3x^2) + \cdots \\ 
+        &= (1 + 2x + 3x^2) (1 + x^3 + x^6 + \cdots) \\ 
+        \intertext{We already know the series of $ (1 + x^3 + x^6 + \cdots) $ from item \#4 above, so we can just substitute.}
+        &= (1 + 2x + 3x^2) \cdot \sum_{n=0}^{\infty} {(x^3)}^n = \frac{3x^2 + 2x + 1}{1-x^3}. \tag*{$\blacksquare$}
+    \end{align*} 
+    \item 0, 1, 0, 1, 0, 1, 0, 1, \ldots\par 
+    \textit{Solution.} The generating function for the sequence is given by\begin{align*} 
+        0 + x + 0x^2 + x^3 + 0x^4 + x^5 + \cdots &= \sum_{n=0}^{\infty} x^{2n+1} = x \cdot \sum_{n=0}^{\infty} {(x^2)}^n = \frac{x}{1-x^2}. \tag*{$\blacksquare$}
+    \end{align*} 
+    \transparent{0.5}
+    \colorbox{CornflowerBlue}{
+    \transparent{1.0}
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        For items \#7 to \#12, we need to evaluate the coefficient of the indicated term. 
+    \end{minipage}
+    }\transparent{1.0}
+    \item $\big[x^{11}\big]{(x+x^2)}^8$.\begin{solution} 
+        We can start by factoring out $x^8$ from the expression. We then have\begin{align*} 
+            \big[x^{11}\big]{(x+x^2)}^8 &= \big[ x^{11} \big] x^8 {(1+x)}^8 = \big[ x^{3} \big] {(1+x)}^8. 
+        \end{align*} Thus, by the binomial theorem, the coefficient of $x^{3}$ is $\binom{8}{3} = 56$. 
+    \end{solution}
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} You might be wondering, why did we factor out $x^8$ and not just $x$? Well, the common factor $x$ is actually still within the exponent. We can picture it like so:\[
+            {(x+x^2)}^8 = {\big(x\cdot (1+x)\big)}^8 = x^8 \cdot {(1+x)}^8, 
+        \] by laws of exponents. If we were to factor out only $x$, then the coefficient would actually become 0, because it's $\binom{8}{10}$. That isn't to say that the 
+        coefficient will never be 0, but just be careful with your algebra. 
+    \end{minipage}%
+    } 
+    \item $\big[x^5\big]\dfrac{1}{1-3x}$.\begin{solution} 
+        We can use the theorem given to determine that the coefficient is $3^5 = 243$. 
+    \end{solution}
+    \item $\big[x^{10}\big]\dfrac{x}{1+2x}$.\begin{solution} 
+        We can simplify using the theorems given. We then have\begin{align*} 
+            \big[x^{10}\big]\frac{x}{1+2x} &= \big[x^9\big]\frac{1}{1+2x} = \big[x^9\big] \frac{1}{1-(-2x)}. 
+        \end{align*} Thus, the coefficient of $x^9$ is ${(-2)}^9 = -512$. 
+    \end{solution}  
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} The module gave us the following for solving coefficients:\footnote{If you're wondering where the other one went, it's the same as this, with $a=1$.}\begin{align*} 
+            \big[x^n\big] \frac{1}{1-ax} &= \begin{cases} a^n &\text{if $n$ is a nonegative integer} \\ 0 &\text{otherwise} \end{cases}
+        \end{align*} which is why I ``pulled out'' the negative sign in the item above, just to make it clearer what the value of $a$ was. However, from here on out, just assume a $+$ on the 
+        denominator means that $a$ is negative. 
+    \end{minipage}%
+    }
+    \item $\big[x^8\big]\dfrac{1}{2+x}$.\begin{solution} 
+        We can begin by factoring out $\dfrac{1}{2}$ from the function. We do this so that the denominator takes on the form of $1-ax$, where $a$ is some real number. We then have\begin{align*} 
+            \big[x^8\big]\frac{1}{2+x} &= \big[x^8\big] \bigg( \frac{1}{2} \cdot \frac{1}{1+\frac{1}{2}x} \bigg) = \frac{1}{2} \cdot \big[x^8\big] \frac{1}{1+\frac{1}{2}x}. 
+        \end{align*} Solving $\big[x^8\big] \dfrac{1}{1+\frac{1}{2}x} $ gives us ${\bigg(-\dfrac{1}{2}\bigg)}^8 = \dfrac{1}{256}$. We then multiply it by $\dfrac{1}{2}$ to get $\dfrac{1}{512}$. 
+    \end{solution} 
+    \item $\big[x^{18}\big]\dfrac{4+2x-8x^2}{1-x}$.\begin{solution}
+        We can begin by separating the function into its different terms. We can then extract the coefficient of $x^{18}$ from each of them and add them together. We then have\begin{align*} 
+            \big[x^{18}\big]\frac{4+2x-8x^2}{1-x} &= \big[x^{18}\big] \bigg( \frac{4}{1-x} + \frac{2x}{1-x} - \frac{8x^2}{1-x} \bigg) = \big[x^{18}\big] \frac{4}{1-x} + \big[x^{18}\big] \frac{2x}{1-x} - \big[x^{18}\big] \frac{8x^2}{1-x} \\
+            &= 4 \cdot \big[x^{18}\big] \frac{1}{1-x} + 2 \cdot \big[x^{17}\big] \frac{1}{1-x} - 8 \cdot \big[x^{16}\big] \frac{1}{1-x}.
+        \end{align*} Simpliying shows us that the coefficient of $x^{18}$ is $4 \cdot 1 + 2 \cdot 1 - 8 \cdot 1 = -2$. 
+    \end{solution} 
+    \item $\big[x\big]\dfrac{4+2x-8x^2}{1-x}$.\begin{solution}
+        Since this item is very similar to the one above, we can proceed likewise. We then have\begin{align*} 
+            \big[x\big]\frac{4+2x-8x^2}{1-x} &= \big[x\big] \bigg( \frac{4}{1-x} + \frac{2x}{1-x} - \frac{8x^2}{1-x} \bigg) = \big[x\big] \frac{4}{1-x} + \big[x\big] \frac{2x}{1-x} - \big[x\big] \frac{8x^2}{1-x} \\
+            &= 4 \cdot \big[x\big] \frac{1}{1-x} + 2 \cdot \big[x^0\big] \frac{1}{1-x} - 8 \cdot \big[x^{-1}\big] \frac{1}{1-x}.
+        \end{align*} Here, however, the exponent of $x$ in the last term is $-1$, which means that its coefficient will be 0. Thus, the coefficient of $x$ is $4\cdot 1 + 2\cdot 1 - 8\cdot0 = 6$. 
+    \end{solution}
+    \transparent{0.5}
+    \colorbox{CornflowerBlue}{
+    \transparent{1.0}
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        For items \#13 to \#16, we need to find the underlying sequence that is represented by the given generating functions.
+    \end{minipage}
+    }\transparent{1.0}
+    \item $ \dfrac{x^2}{1-3x} $.\begin{solution}
+        We can start by finding the coefficient of an arbitrary term $x^n$. We then have\begin{align*} 
+            \big[x^n\big] \frac{x^2}{1-3x} &= \big[x^{n-2}\big] \frac{1}{1-3x}. 
+        \end{align*}\begin{itemize} 
+            \item If $n<2$, then $n-2 <0$. Thus, the coefficient will be 0. 
+            \item If $n\geq 2$, then\[
+                \big[x^{n-2}\big] \frac{1}{1-3x} = 3^{n-2}. 
+            \]
+        \end{itemize} 
+        Thus, the sequence given by the generating function is 0, 0, 1, 3, 9, 27, \ldots. 
+    \end{solution} 
+    \item $ \dfrac{3x^2 -2x}{1-x} $.\begin{solution}
+        We can start by finding the coefficient of an arbitrary term $x^n$. We then have\begin{align*}
+            \big[x^n\big] \frac{3x^2 -2x}{1-x} &= \big[x^n\big] \bigg(\frac{3x^2}{1-x} - \frac{2x}{1-x}\bigg) = \big[x^n\big] \frac{3x^2}{1-x} - \big[x^n\big] \frac{2x}{1-x} \\
+            &= 3\cdot \big[x^{n-2}\big] \frac{1}{1-x} - 2\cdot \big[x^{n-1}\big] \frac{1}{1-x}. 
+        \end{align*}\begin{itemize} 
+            \item If $n=0$, both exponents will be negative. Thus, the coefficient will be 0. 
+            \item If $n=1$, we have\[
+                \big[x^1\big] \frac{3x^2 -2x}{1-x} = 3\cdot \big[x^{-1}\big] \frac{1}{1-x} - 2\cdot \big[x^{0}\big] \frac{1}{1-x} = 3\cdot 0 - 2\cdot 1 = -2.
+            \]
+            \item If $n\geq 2$, we have\[
+                \big[x^n\big] \frac{3x^2 -2x}{1-x} = 3\cdot \big[x^{n-2}\big] \frac{1}{1-x} - 2\cdot \big[x^{n-1}\big] \frac{1}{1-x} = 3\cdot 1 - 2\cdot 1 = 1. 
+            \]
+        \end{itemize} Thus, the sequence given by the generating function is 0, $-2$, 1, 1, 1, \ldots.   
+    \end{solution}
+    \item ${(3x^2 +2x)}^5$.\begin{solution}
+        We can start by finding the coefficient of an arbitrary term $x^n$. We then have\begin{align*}
+            \big[x^n\big] {(3x^2 +2x)}^5 &= \big[x^n\big] \big(x^5 \cdot {(3x +2)}^5 \big) = \big[x^{n-5}\big] {(3x +2)}^5 \\ 
+            &= \big[x^{n-5}\big] {\Bigg[ 2\cdot \bigg(\frac{3}{2}x +1\bigg) \Bigg]}^5 = 2^5 \cdot \big[x^{n-5}\big] {\bigg(1+ \frac{3}{2}x\bigg)}^5
+        \end{align*}\begin{itemize} 
+            \item If $n <5$, the exponent will be negative. Thus, the coefficient will be 0. 
+            \item If $n\geq 5$, we have\begin{align*}
+                \big[x^n\big] {(3x^2 +2x)}^5 &= 2^5 \cdot \big[x^{n-5}\big] {\bigg(1+ \frac{3}{2}x\bigg)}^5 \\ 
+                &= 2^5 \cdot \binom{5}{n-5} {\bigg(\frac{3}{2} \bigg)}^{n-5}. 
+            \end{align*} We can notice that if $n>10$, then the binomial function will become 0 and thus, so will the coefficients. This means that we can 
+            just substitute values in between 5 and 10 (inclusive) to find the sequence. 
+        \end{itemize} Thus, the sequence given by the generating function is 32, 240, 720, 1080, 810, 243. 
+    \end{solution}
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} You might have noticed I didn't include the 0 coefficient terms in this one. That's because its a finite sequence and not an infinite one, and so 
+        including the 0's would be kind of meaningless. Additionally, if you expand the function and get the coefficients that way, you actually get them in reverse order (that is, 
+        243, 810, 1080, 720, 240, 32), but that's just because we swapped the terms in our simplifaction to make it more similar to something we're familiar with. You could reverse it if that makes more sense to you.
+    \end{minipage}%
+    }
+    \item $\dfrac{1-x}{1+x}$.\begin{solution}
+        We can start by finding the coefficient of an arbitrary term $x^n$. We then have\begin{align*}
+            \big[x^n\big] \frac{1-x}{1+x} &= \big[x^n\big] \bigg(\frac{1}{1+x} - \frac{x}{1+x} \bigg) = \big[x^n\big] \frac{1}{1+x} - \big[x^n\big] \frac{x}{1+x} \\ 
+            &= \big[x^n\big] \frac{1}{1+x} - \big[x^{n-1}\big] \frac{1}{1+x}.
+        \end{align*}\begin{itemize} 
+            \item If $n=0$, we have\[
+                \big[x^0\big] \frac{1-x}{1+x} = \big[x^0\big] \frac{1}{1+x} - \big[x^{-1}\big] \frac{1}{1+x} = 1- 0 = 1. 
+            \]
+            \item If $n>0$, we have\[
+                \big[x^n\big] \frac{1-x}{1+x} = \big[x^n\big] \frac{1}{1+x} - \big[x^{n-1}\big] \frac{1}{1+x} = {(-1)}^n - {(-1)}^{n-1},
+            \] which is $-2$ when $n$ is odd and $2$ when $n$ is even. 
+        \end{itemize} Thus, the sequence given by the generating function is 1, $-2$, 2, $-2$, 2, \ldots. 
+    \end{solution}
+    \transparent{0.5}
+    \colorbox{CornflowerBlue}{
+    \transparent{1.0}
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        For items \#17 and \#18, recall some familiar power series from calculus. As with last module's calculus collabs, I highly doubt these are necessary. 
+    \end{minipage}
+    }\transparent{1.0}
+    \renewcommand{\labelenumi}{\fcolorbox{magenta}{white}{\textbf{\arabic{enumi}}}}
+    \item Write the closed-form of the generating function for the sequence 1, $\dfrac{1}{2!}$, $\dfrac{1}{3!}$, $\dfrac{1}{4!}$, \ldots.\begin{solution}
+        Recall that the power series representation of $e^x$ is just\[
+            \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + 1x + \frac{1}{2!} x^2 + \frac{1}{3!} x^3 + \frac{1}{4!} x^4 + \cdots = e^x.     
+        \] To get from here to the given, we remove the first term. Thus, the generating function is $e^x -1$. 
+    \end{solution}
+    \item Write the closed-form of the generating function for the sequence 1, $-\dfrac{1}{2}$, $\dfrac{1}{3}$, $-\dfrac{1}{4}$, \ldots.\begin{solution} 
+        Recall that the power series representation of $\ln{(1+x)}$ is just\[
+            \sum_{n=1}^{\infty} {(-1)}^{n+1} \frac{x^n}{n} = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots = \ln{(1+x)}. 
+        \] Thus, the generating function for the sequence is $\ln{(1+x)}$. 
+    \end{solution}
+\end{enumerate}  
+
+\pagebreak
+\section*{4.1.2: Generalized Binomial Theorem} 
+\textit{Not to be confused with the multinomial theorem. This section is about letting the binomial coefficients (i.e.\ $\binom{n}{k}$) work 
+with real numbers instead of only integers.} 
+\begin{enumerate} 
+    \item $\displaystyle\binom{-2}{9}$.\begin{solution}
+        Using the binomial function, we have $\displaystyle{} \binom{-2}{9} = {(-1)}^9 \multibinom{2}{9} = -\binom{10}{9} = -10$.
+    \end{solution} 
+    \item $\displaystyle\binom{1/3}{6}$.\par
+    \textit{Solution.} Using the binomial function, we have\begin{align*} 
+        \binom{1/3}{6} &= \frac{1/3(-2/3)(-5/3)(-8/3)(-11/3)(-14/3)}{6!} = - \frac{12320}{729} \cdot \frac{1}{720} = - \frac{154}{6561}.\footnotemark \tag*{$\blacksquare$}
+    \end{align*} \footnotetext{Simplified (is it even simplest form? I don't know) here for completion's sake, but no need to simplify, probably.}
+    \item $\displaystyle\binom{-1/5}{3}$.\par 
+    \textit{Solution.} Using the binomial function, we have\begin{align*} 
+        \binom{-1/5}{3} &= \frac{-1/5(-6/5)(-11/5)}{3!} = -\frac{66}{750} = -\frac{11}{125}. \tag*{$\blacksquare$}
+    \end{align*}
+    \item $\displaystyle\binom{-1/2}{1}$.\begin{solution}
+        Using the binomial function, we have $\displaystyle{} \binom{-1/2}{1} = \frac{-1/2}{1} = -\frac{1}{2}$. 
+    \end{solution}
+        \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} If you'll remember, we have this theorem from the module:\begin{equation*}
+            \binom{-n}{r} = {(-1)}^r \binom{n+r-1}{r}.     
+        \end{equation*} The handouts say that this only works for nonegative integer values for $n$, but I tried it on the fraction ones above 
+        and it gave the same answer. Make of that what you will. Prove it if you want to! 
+    \end{minipage}%
+    }\par
+    \transparent{0.5}
+    \colorbox{CornflowerBlue}{
+    \transparent{1.0}
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        For items \#5 to \#10, we need to evaluate the coefficient of the indicated term. 
+    \end{minipage}
+    }\transparent{1.0}
+    \item $\big[x^{16}\big]{(1+x+x^2+x^3+\cdots)}^5$.\par
+        \textit{Solution.} We can notice that the series within the exponent is the infinite geometric series, which already has a closed-form representation. We can then rewrite the 
+        function as\[
+            \big[x^{16}\big]{(1+x+x^2+x^3+\cdots)}^5 = \big[x^{16}\big]{\bigg(\frac{1}{1-x}\bigg)}^5 = \big[x^{16}\big]\frac{1}{{(1-x)}^5} = \big[x^{16}\big] {(1-x)}^{-5}. 
+        \] From here, we can just use the generalized binomial theorem to determine the coefficient. Thus,\[ 
+            \big[x^{16}\big] {(1-x)}^{-5} = \binom{-5}{16} {(-1)}^{16} = {(-1)}^{16} \multibinom{5}{16} {(-1)}^{16} = \binom{20}{16} = 4845. \tag*{$\blacksquare$} 
+        \]
+    \item $\big[x^{22}\big]{(x^2+ x^4 + x^6 + x^8 +\cdots)}^7$.\par
+        \textit{Solution.} We can start by trying to find a closed-form representation of the generating function.\begin{align*} 
+            x^2+ x^4 + x^6 + x^8 +\cdots &= {(x^2)}^1 + {(x^2)}^2 + {(x^2)}^3 + {(x^2)}^4 + \cdots \\ 
+            &= \sum_{n=0}^\infty {(x^2)}^{n+1} = x^2 \cdot \sum_{n=0}^\infty {(x^2)}^n = \frac{x^2}{1-x^2}. 
+        \end{align*} We can then substitute this into the original function, giving us\[
+            \big[x^{22}\big]{(x^2+ x^4 + x^6 + x^8 +\cdots)}^7 = \big[x^{22}\big]{\bigg(\frac{x^2}{1-x^2}\bigg)}^7 = \big[x^{22}\big] \frac{x^{14}}{{(1-x^2)}^7} = \big[x^8\big] {(1-x^2)}^{-7}.
+        \] Finally, we can use the generalized binomial theorem to determine the coefficient. Thus,\[
+            \big[x^8\big] {(1-x^2)}^{-7} = \binom{-7}{4} {(-1)}^{4} = {(-1)}^{4} \multibinom{7}{4} {(-1)}^{8} = \binom{10}{4} = 210. \tag*{$\blacksquare$}
+        \]
+    \item $\big[x^{25}\big]{(1+x^5)}^{10}$.\par 
+    \textit{Solution.} Here, we can just use the generalized binomial theorem to determine the coefficient. Thus,\[
+        \big[x^{25}\big]{(1+x^5)}^{10} = \binom{10}{5} = 252. \tag*{$\blacksquare$} 
+    \]
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} You might be wondering why we did $\binom{-7}{4}$ and $\binom{10}{5}$ in the two problems above instead of $\binom{-7}{8}$ and $\binom{10}{25}$, respectively. 
+        Well, aside from the second one just giving 0, notice that the terms containng $x$ within the parentheses already have their own exponents (2 and 5). Thus, if we want to find a specific exponent, we need to 
+        consider what exponent we would multiply \textit{to the existing exponent} in order to get the desired one. 8 divided by 2 is 4, and 25 divided by 5 is 5, which is how we got our values. 
+    \end{minipage}%
+    }
+    \item $\big[x^{20}\big]\dfrac{4+2x}{{(1-x)}^2}$.\par 
+    \textit{Solution.} We can use the same techniques from part 4.1.1. Thus,\begin{align*}
+        \big[x^{20}\big]\dfrac{4+2x}{{(1-x)}^2} &= \big[x^{20}\big] \bigg( \frac{4}{{(1-x)}^2} + \frac{2x}{{(1-x)}^2} \bigg) = \big[x^{20}\big]\frac{4}{{(1-x)}^2} + \big[x^{20}\big]\frac{2x}{{(1-x)}^2} \\ 
+        &= 4 \cdot \big[x^{20}\big] \frac{1}{{(1-x)}^2} + 2 \cdot \big[x^{19}\big] \frac{1}{{(1-x)}^2}. \\
+        \intertext{Then, we can just solve these with the generalized binomial theorem. Thus,}
+        \big[x^{20}\big]\dfrac{4+2x}{{(1-x)}^2} &= 4 \cdot \big[x^{20}\big] {(1-x)}^{-2} + 2 \cdot \big[x^{19}\big] {(1-x)}^{-2} = 4\cdot \binom{-2}{20} {(-1)}^{20} + 2\cdot \binom{-2}{19} {(-1)}^{19} \\
+        &= 4 \cdot {(-1)}^{20} \multibinom{2}{20} + 2\cdot {(-1)}^{19} \multibinom{2}{19} {(-1)}^{19} \\
+        &= 4\cdot \binom{21}{20} + 2 \cdot \binom{20}{19} = 84 + 40 = 124. \tag*{$\blacksquare$}
+    \end{align*} 
+    \pagebreak
+    \item $\big[x^8\big] \dfrac{x+3}{\sqrt{1+x}}$.\par 
+    \textit{Solution.} We begin by breaking the function into separate terms, as above. Thus,\begin{align*} 
+        \big[x^8\big] \frac{x+3}{\sqrt{1+x}} & = \big[x^8\big] \bigg(\frac{x}{\sqrt{1+x}} + \frac{3}{\sqrt{1+x}}\bigg) = \big[x^8\big] \frac{x}{\sqrt{1+x}} + \big[x^8\big] \frac{3}{\sqrt{1+x}} \\
+        & = \big[x^8\big] \frac{x}{{(1+x)}^{\frac{1}{2}}} + \big[x^8\big] \frac{3}{{(1+x)}^{\frac{1}{2}}} = \big[x^7\big] \frac{1}{{(1+x)}^{\frac{1}{2}}} + 3 \cdot \big[x^8\big] \frac{1}{{(1+x)}^{\frac{1}{2}}}.
+        \intertext{Then, we can just solve these with the generalized binomial theorem. Thus,}
+        \big[x^8\big] \frac{x+3}{\sqrt{1+x}} & = \big[x^7\big] {(1+x)}^{-\frac{1}{2}} + 3\cdot \big[x^8\big] {(1+x)}^{-\frac{1}{2}} = \binom{-1/2}{7} + 3 \cdot \binom{-1/2}{8}.\footnotemark \tag*{$\blacksquare$} 
+    \end{align*}\footnotetext{Honestly, fuck simplfying this.}
+    \item $\big[x^5\big] \dfrac{x^3 + 4x^2 +1}{{(1-x)}^4}$.\par 
+    \textit{Solution.} We begin by breaking the function into separate terms, as above. Thus,\begin{align*} 
+        \big[x^5\big] \frac{x^3 + 4x^2 +1}{{(1-x)}^4} &= \big[x^5\big] \bigg(\frac{x^3}{{(1-x)}^4} + \frac{4x^2}{{(1-x)}^4} + \frac{1}{{(1-x)}^4}\bigg) \\ 
+        &= \big[x^5\big] \frac{x^3}{{(1-x)}^4} + \big[x^5\big] \frac{4x^2}{{(1-x)}^4} + \big[x^5\big] \frac{1}{{(1-x)}^4} \\
+        &= \big[x^2\big] \frac{1}{{(1-x)}^4} + 4 \cdot \big[x^3\big] \frac{1}{{(1-x)}^4} + \big[x^5\big] \frac{1}{{(1-x)}^4} 
+        \intertext{Then, we can just solve these with the generalized binomial theorem. Thus,} 
+        \big[x^5\big] \frac{x^3 + 4x^2 +1}{{(1-x)}^4} &= \big[x^2\big] {(1-x)}^{-4} + 4 \cdot \big[x^3\big] {(1-x)}^{-4} + \big[x^5\big] {(1-x)}^{-4} \\
+        &= \binom{-4}{2} {(-1)}^2 + 4 \cdot \binom{-4}{3} {(-1)}^3 + \binom{-4}{5} {(-1)}^5 \\ 
+        &= \binom{5}{2} + 4 \cdot \binom{6}{3} {(-1)}^3 {(-1)}^3 + \binom{8}{5} {(-1)}^5 {(-1)}^5 \\ 
+        &= 10 + 4 \cdot 20 + 56 = 146. \tag*{$\blacksquare$}
+    \end{align*} 
+    \item Show that $\big[x^n\big] \dfrac{1}{25x^2 -10x +1} = n \cdot 5^n$.\par
+    I have solved this item like five times and the answer I get is always $n \cdot 5^n + 5^n $, not the one above. Honestly, I don't know
+    why I speak so highly of sir Aldrich when his handouts are wrong (kidding). Anyway, I'll clarify with Pastor whether this is a typo or not. In the meantime, 
+    I'll simply \textbf{prove} that \textit{my} answer is correct.\par 
+        \textit{Proof.} We begin by simplifying the denominator, giving us $\dfrac{1}{{(5x-1)}^2}$. Then, we can solve this using the generalized binomial theorem.\begin{align*} 
+            \big[x^n\big] \dfrac{1}{25x^2 -10x +1} &= \big[x^n\big] \frac{1}{{(5x-1)}^2} = \big[x^n\big] {(5x-1)}^{-2} \\
+            &= \binom{-2}{n} 5^n {(-1)}^{-2-n} = \binom{n+2-1}{n} {(-1)}^{n} \cdot 5^n {(-1)}^{-2-n} \\ 
+            &= \binom{n+1}{n} 5^n {(-1)}^{-2} = 5^n (n+1) = n\cdot 5^n + 5^n. \tag*{$\qedsymbol$}
+        \end{align*}     
+    \par\begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} These next three proofs are not easy, especially the last one! Not only that, they're really lengthy and \LaTeX{} can only fit so many 
+        math terms on one page, which prevents me from putting my usual reminder text. The main idea for items \#12 and \#13 are to use operations on the fractions to 
+        make them similar, while item \#14 uses induction (wowie!). Aldrich said the test is purely technical (i.e., solving), so these aren't even necessary, strictly speaking, 
+        but I've included them for the nerds to check out if they so desire. 
+    \end{minipage}%
+    }
+    \renewcommand{\labelenumi}{\fcolorbox{magenta}{white}{\textbf{\arabic{enumi}}}}
+    \item Prove that $\displaystyle \binom{n+1}{k} = \binom{n}{k} + \binom{n}{k+1},~\forall r \in \mathbb{Z} \mid r \geq 0,~\forall n \in \mathbb{R}$.\begin{proof} 
+        Expanding both sides using the generalized binomial function gives us\begin{align*} 
+            \frac{(n+1)(n)(n-1)\hdots(n-k+2)}{k!} &= \frac{n(n-1)\hdots(n-k+1)}{k!}  \\
+            &\phantom{=}\ + \frac{n(n-1)\hdots(n-k+2)}{(k-1)!} \\
+            \frac{(n+1)(n)(n-1)\hdots(n-k+2)}{k!} - \frac{n(n-1)\hdots(n-k+2)}{(k-1)!} &= \frac{n(n-1)\hdots(n-k+1)}{k!} \\
+            \frac{(n+1)\big[n(n-1)\hdots(n-k+2)\big] - k\big[n(n-1)\hdots(n-k+2)\big]}{k!} &= \frac{n(n-1)\hdots(n-k+1)}{k!} \\ 
+            \frac{(n+1-k)\big[n(n-1)\hdots(n-k+2)\big]}{k!} &= \frac{n(n-1)\hdots(n-k+1)}{k!} \\ 
+            \frac{n(n-1)\hdots(n-k+2)(n-k+1)}{k!} &= \frac{n(n-1)\hdots(n-k+1)}{k!} \\ 
+            \binom{n}{k} &= \binom{n}{k},
+        \end{align*} which shows that the statement is true. 
+    \end{proof} 
+    \item Prove that $\displaystyle{} \binom{1/2}{r+1} = \binom{1/2}{r} \frac{1-2r}{2(r+1)},~\forall r \in \mathbb{Z} \mid r \geq 0$.\begin{proof} 
+        Expanding both sides using the generalized binomial function gives us\begin{align*} 
+            \frac{1/2 (-1/2) (-3/2) \hdots (1/2-r+1)(1/2-r)}{(r+1)!} &= \frac{1/2(-1/2)(3/2)\hdots(1/2-r+1)}{r!} \cdot \frac{1-2r}{2(r+1)} \\
+            \frac{1/2 -r}{r+1} \cdot \frac{1/2(-1/2)(-3/2) \hdots (1/2 -r + 1)}{r!} &= \frac{1/2(-1/2)(3/2)\hdots(1/2-r+1)}{r!} \cdot \frac{1-2r}{2(r+1)} \\ 
+            \frac{1/2 -r}{r+1} \cdot \binom{1/2}{r} &= \binom{1/2}{r} \cdot \frac{1-2r}{2(r+1)} \\ 
+            \frac{1-2r}{2} \cdot \frac{1}{r+1} \cdot \binom{1/2}{r} &= \binom{1/2}{r} \cdot \frac{1-2r}{2(r+1)} \\ 
+            \binom{1/2}{r} \cdot \frac{1-2r}{2(r+1)} &= \binom{1/2}{r} \cdot \frac{1-2r}{2(r+1)},
+        \end{align*} which shows that the statement is true. 
+    \end{proof} 
+    \item Use induction and item \#13 to prove that $\displaystyle{} \binom{1/2}{r} = \binom{2r}{r} \frac{{(-1)}^{r+1}}{2^{2r}(2r-1)},~\forall r \in \mathbb{Z} \mid r \geq 0$.\par
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} Remember how to do induction from CSci 30? We want to prove the statement by assuming that it holds true for a smaller version of the variable. So, 
+        for instance, assume that it holds for $r$, then show that this means it's also true for $r+1$. The induction in this example isn't that complicated, and it's not strong induction 
+        or anything, but it can be a bit tricky to see how to show how $r+1$ also holds true. We'll go through it slowly.   
+    \end{minipage}%
+    }\begin{proof} 
+        We proceed by induction on $r$. Let $P(r)$ be \[  \binom{1/2}{r} = \binom{2r}{r} \frac{{(-1)}^{r+1}}{2^{2r}(2r-1)},~\forall r \in \mathbb{Z} \mid r \geq 0.\] We assume that $P(r)$ is true. Now we want to show that $P(r+1)$ is also true.
+        That means we want to arrive at an equality that is equivalent to the above inductive hypothesis, except we substitute all $r$'s with $r+1$. Thus,\begin{align*} 
+            \binom{1/2}{r} &= \binom{2r}{r} \frac{{(-1)}^{r+1}}{2^{2r}(2r-1)} \\ 
+            \frac{1-2r}{2(r+1)} \binom{1/2}{r} &= \binom{2r}{r} \frac{{(-1)}^{r+1}}{2^{2r}(2r-1)} \cdot \frac{1-2r}{2(r+1)} &\text{multiplying both sides by}~\frac{1-2r}{2(r+1)} \\ 
+            \binom{1/2}{r+1} &= \binom{2r}{r} \frac{{(-1)}^{r+1}}{2^{2r}(2r-1)} \cdot \frac{1-2r}{2(r+1)} \\
+            \intertext{Here we use the identity from \#13 to show $r+1$ on the LHS.\@ Now we want to simplify the RHS.} 
+            \binom{1/2}{r+1} &= \frac{(2r)!}{r!r!} \cdot \frac{{(-1)}^{r+1}}{2^{2r}\cancel{(2r-1)}} \cdot \frac{-1\cancel{(2r-1)}}{2(r+1)} &\text{cancelling like terms, expanding}~\binom{2r}{r} \\ 
+            &= \frac{(2r)!}{r!r!(r+1)} \cdot \frac{{(-1)}^{r+1}\cdot -1}{2^{2r} \cdot 2} \\ 
+            &= \frac{(2r)!}{r!(r+1)!} \cdot \frac{{(-1)}^{r+2}}{2^{2r+1}} &\text{since}~(r+1)! = r!(r+1) \\ 
+            \intertext{Now we've shown that $r+1$ holds for ${(-1)}^{r+1}$, but we want to transform $\displaystyle{} \binom{2r}{r}$ into $\displaystyle{} \binom{2r+2}{r+1}$, 
+            and the denominator into $2^{2r+2}(2r+1)$.\footnotemark{} We can do this by some clever multiplication of fractions.}
+            \binom{1/2}{r+1} &= \frac{(2r)!}{r!(r+1)!} \cdot \frac{{(-1)}^{r+2}}{2^{2r+1}} \cdot \bigg( \frac{2r+1}{2r+1} \bigg) &\text{since this fraction}=1 \\ 
+            &= \frac{(2r)!(2r+1)}{r!(r+1)!} \cdot \frac{{(-1)}^{r+2}}{2^{2r+1}(2r+1)} \\ 
+            &= \frac{(2r+1)!}{r!(r+1)!} \cdot \frac{{(-1)}^{r+2}}{2^{2r+1}(2r+1)} \cdot \bigg( \frac{2r+2}{2(r+1)} \bigg) &\text{since this fraction}=1 \\ 
+            &= \frac{(2r+1)!(2r+2)}{r!(r+1)!(r+1)} \cdot \frac{{(-1)}^{r+2}}{2^{2r+1}(2r+1) \cdot 2} \\ 
+            &= \frac{(2r+2)!}{(r+1)!(r+1)!} \cdot \frac{{(-1)}^{r+2}}{2^{2r+2}(2r+1)} &\text{since}~(2r+2)! = (2r+1)!(2r+2)\\ 
+            \binom{1/2}{r+1} &= \binom{2r+2}{r+1} \frac{{(-1)}^{r+2}}{2^{2r+2}(2r+1)}, &\text{by the binomial function}
+        \end{align*}
+        \footnotetext{If you're confused as to how we arrived at these expressions, just substitute $r+1$ into the original equality.} which shows that the statement holds true for the inductive step.
+    \end{proof} 
+\end{enumerate} 
+
+\pagebreak
+\section*{4.1.3: Partial Fractions}
+\textit{Truth be told, I find this topic boring and tedious, but there's one problem here that I proved to be true for general terms which was very cool. Brush up on your algebra too!} 
+\begin{enumerate} 
+    \item Find real numbers $A$ and $B$ such that $\dfrac{1+3x}{(1-x)(2-x)} = \dfrac{A}{1-x} + \dfrac{B}{2-x}$.\begin{solution} 
+        We begin by multiplying both sides of the equation by the LCD, which is $(1-x)(1-2x)$.\[
+            1+3x = A(2-x) + B(1-x)  
+        \] We can then solve for $A$ and $B$ using some clever substitution.\begin{itemize} 
+            \item When $x=1$, $1+3(1) = A(2-1) + B(0)$, so $A=4$. 
+            \item When $x=2$, $1+3(2) = A(0) + B(1-2)$, so $B=-7$. 
+        \end{itemize} Thus, the partial fraction decomposition of $\dfrac{1+3x}{(1-x)(2-x)}$ is given by $\dfrac{4}{1-x} - \dfrac{7}{2-x}$.
+    \end{solution} 
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} It's weird to me that this was never explicitly stated in class, but just in case anyone's confused, the values for $x$ 
+        that we substitute into the equation are the ones that will make one of the terms 0. Thus, when we have $A(ax+b) + B(cx+d)$, and we want to solve for $A$, we 
+        equate $cx+d$ to 0 and solve for $x$ so that $B$ will be multiplied to 0. This will make our lives a lot easier. Also, I won't be using the cover-up method here because
+        I don't have like a formal understanding of how it works, but if you like it and understand it well, then do whatever works for you.
+    \end{minipage}%
+    }
+    \item Find real numbers $A$ and $B$ such that $\dfrac{1+x}{(1-2x)(2+x)} = \dfrac{A}{1-2x} + \dfrac{B}{2+x}$.\begin{solution} 
+        We begin by multiplying both sides of the equation by the LCD, which is $(1-2x)(2+x)$.\[
+            1+x = A(2+x) + B(1-2x)    
+        \] We can then solve for $A$ and $B$ using some clever substitution.\begin{itemize} 
+            \item When $x=\dfrac{1}{2}$, $1 + \dfrac{1}{2} = A\bigg(\dfrac{5}{2}\bigg) + B(0)$, so $A=\dfrac{3}{5}$. 
+            \item When $x=-2$, $1 + (-2) = A(0) + B\big(1-2(-2)\big)$, so $B = -\dfrac{1}{5}$. 
+        \end{itemize} Thus, the partial fraction decomposition of $\dfrac{1+x}{(1-2x)(2+x)}$ is given by $\dfrac{3}{5(1-2x)} - \dfrac{1}{5(2+x)}$. 
+    \end{solution} 
+    \item Find real numbers $A$ and $B$ such that $\dfrac{1-9x}{(1-8x)(1-10x)} = \dfrac{A}{1-8x} + \dfrac{B}{1-10x}$.\begin{solution} 
+        We begin by multiplying both sides of the equation by the LCD, which is $(1-8x)(1-10x)$.\[
+            1-9x = A(1-10x) + B(1-8x)    
+        \] We can then solve for $A$ and $B$ using some clever substitution.\begin{itemize}
+            \item When $x=\dfrac{1}{8}$, $1-\dfrac{9}{8} = A\bigg(1-\dfrac{10}{8}\bigg) + B(0)$, so $A=\dfrac{1}{2}$. 
+            \item When $x=\dfrac{1}{10}$, $1-\dfrac{9}{10} = A(0) + B\bigg(1-\dfrac{8}{10}\bigg)$, so $B=\dfrac{1}{2}$. 
+        \end{itemize} Thus, the partial fraction decomposition of $\dfrac{1-9x}{(1-8x)(1-10x)}$ is $\dfrac{1}{2(1-8x)} + \dfrac{1}{2(1-10x)}$. 
+    \end{solution}
+    Now, if you're like me, you might've noticed some cool things in this answer. Firstly, $A$ and $B$ are both $\frac{1}{2}$, which we here in mathematics
+    like to call a $\text{Nice Number}^{\text{TM}}$. Secondly, all the terms are fairly similar, and if we arrange them in order of the coefficient of $x$, we get 
+    $1-8x$, $1-9x$, and $1-10x$. Can we generalize this and prove it holds for all $1-(n-1)x$, $1-nx$, $1-(n+1)x$?\par 
+    \parindent=-25pt \fbox{\begin{minipage}[t]{0.98\textwidth}
+        \vspace{0pt} 
+        \textbf{Can we Prove it?} At least, I was able to come up with one. Ignore this if you aren't a nerd.\begin{proof} 
+           Suppose we have a fraction $\dfrac{1-nx}{\big(1-(n-1)x\big)\big(1-(n+1)x\big)}$, and we want to find real numbers $A$ and $B$ such that 
+           $\dfrac{1-nx}{\big(1-(n-1)x\big)\big(1-(n+1)x\big)} = \dfrac{A}{1-(n-1)x} + \dfrac{B}{1-(n+1)x}$, where $n \neq \pm 1$.\footnote{The reason for this restriction 
+           will become apparent later.}\begin{align*} 
+                \frac{1-nx}{\big(1-(n-1)x\big)\big(1-(n+1)x\big)} &= \frac{A}{1-(n-1)x} + \frac{B}{1-(n+1)x} \\
+                1-nx &= A\big(1-(n+1)x\big) + B\big(1-(n-1)x\big) &\text{multiplying both sides by LCD}
+            \end{align*} We can then solve for $A$ and $B$ using some clever substitution.\begin{itemize} 
+                \item When $x=\dfrac{1}{n-1}$, (this is why we had $n \neq 1$ earlier)\begin{align*}
+                    1- \frac{n}{n-1} &= A \bigg(1 - \frac{n+1}{n-1} \bigg) + B(0) \\ 
+                    \frac{n-1}{n-1} - \frac{n}{n-1} &= A\bigg(\frac{n-1}{n-1} - \frac{n+1}{n-1}\bigg) \\ 
+                    \frac{-1}{n-1} &= A\bigg(\frac{-2}{n-1} \bigg) \\
+                    A &= \frac{1}{2}. 
+                \end{align*}
+                \item When $x=\dfrac{1}{n+1}$, (this is why we had $n \neq -1$ earlier)\begin{align*} 
+                    1- \frac{n}{n+1} &= A(0) + B\bigg(1 - \frac{n-1}{n+1} \bigg) \\ 
+                    \frac{n+1}{n+1} - \frac{n}{n+1} &= B\bigg(\frac{n+1}{n+1} - \frac{n-1}{n+1}\bigg) \\ 
+                    \frac{1}{n+1} &= B\bigg(\frac{2}{n+1} \bigg) \\
+                    B &= \frac{1}{2}.
+                \end{align*} 
+            \end{itemize} Thus, $\dfrac{1-nx}{\big(1-(n-1)x\big)\big(1-(n+1)x\big)} = \dfrac{1}{2\big(1-(n-1)x\big)} + \dfrac{1}{2\big(1-(n+1)x\big)}$, when $n\neq \pm 1$. 
+        \end{proof} 
+    \end{minipage}%
+    }
+    \item Find real numbers $A$ and $B$ such that $\dfrac{2+x}{{(1-3x)}^2} = \dfrac{A}{1-3x} + \dfrac{B}{{(1-3x)}^2}$.\begin{solution} 
+        We begin by multiplying both sides of the equation by the LCD, which is ${(1-3x)}^2$.\[
+            2+x = A(1-3x) + B     
+        \] We can then solve for $A$ and $B$, but not quite as usual since we can't easily eliminate B.\begin{itemize} 
+            \item When $x=\dfrac{1}{3}$, $2+ \dfrac{1}{3} = A(0) + B$, so $B=\dfrac{7}{3}$. 
+            \item Substituting $B$ and setting $x=0$ in the equation gives us $2 = A(1) + \dfrac{7}{3}$, so $A=-\dfrac{1}{3}$. 
+        \end{itemize} Thus, the partial fraction decomposition of $\dfrac{2+x}{{(1-3x)}^2}$ is $-\dfrac{1}{3(1-3x)} + \dfrac{7}{3{(1-3x)}^2}$. 
+    \end{solution} 
+    \item Find real numbers $A$, $B$, and $C$ such that $\dfrac{1}{(x+1)(x+2)(x+3)} = \dfrac{A}{x+1} + \dfrac{B}{x+2} + \dfrac{C}{x+3}$.\footnote{This might also be provable with generalized terms, but we're on a time crunch so I won't do it.} 
+    \begin{solution} 
+        We begin by multiplying both sides by the LCD, which is $(x+1)(x+2)(x+3)$.\[
+            1 = A(x+2)(x+3) + B(x+1)(x+3) + C(x+1)(x+2)   
+        \] We can then solve for $A$, $B$, and $C$ using some \textsc{clever substitution}.\begin{itemize} 
+            \item When $x=-1$, $1= A(-1+2)(-1+3) + B(0)(-1+3) + C(0)(-1+2)$, so $A= \dfrac{1}{2}$. 
+            \item When $x=-2$, $1= A(0)(-1) + B(-2+1)(-2+3) + C(-1)(0)$, so $B= -1$. 
+            \item When $x=-3$, $1= A(-3+2)(0) + B(-3+2)(0) + C(-3+1)(-3+2)$, so $C= \dfrac{1}{2}$. 
+        \end{itemize} Thus, the partial fraction decomposition of $\dfrac{1}{(x+1)(x+2)(x+3)}$ is $\dfrac{1}{2(x+1)} - \dfrac{1}{x+2} + \dfrac{1}{2(x+3)}$.
+    \end{solution}
+    \parindent=2pt\transparent{0.5}
+    \colorbox{CornflowerBlue}{
+    \transparent{1.0}
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        For items \#6 to \#10, we need to evaluate the coefficient of the indicated term. 
+    \end{minipage}
+    }\transparent{1.0}
+    \item Find $\big[x^5\big] \dfrac{1+x}{(1-x)(1-2x)}$.\par
+        \parindent=0.25pt \textit{Solution.} We begin by finding real numbers $A$ and $B$ such that $\dfrac{1+x}{(1-x)(1-2x)} = \dfrac{A}{1-x} + \dfrac{B}{1-2x}$. Multiplying both sides by the LCD gives us\[
+            1+x = A(1-2x) + B(1-x).
+        \] We can then solve for $A$ and $B$.\begin{itemize} 
+            \item When $x=1$, $2= A(1-2) + B(0)$, so $ A=-2$. 
+            \item When $x=\dfrac{1}{2}$, $\dfrac{3}{2}= A(0) + B\bigg(1-\dfrac{1}{2}\bigg)$, so $ B=3$. 
+        \end{itemize} Thus, $\dfrac{1+x}{(1-x)(1-2x)} = \dfrac{-2}{1-x} + \dfrac{3}{1-2x}$. We can substitute this and solve for $\big[x^5\big]$.\begin{align*} 
+            \big[x^5\big] \frac{1+x}{(1-x)(1-2x)} &= \big[x^5\big] \bigg( \frac{-2}{1-x} + \frac{3}{1-2x} \bigg) = \big[x^5\big] \frac{-2}{1-x} + \big[x^5\big] \frac{3}{1-2x}\\ 
+            &= -2\cdot \big[x^5\big] \frac{1}{1-x} + 3\cdot \big[x^5\big] \frac{1}{1-2x} = -2 \cdot 1 + 3\cdot 2^5 = 94. \tag*{$\blacksquare$}
+        \end{align*} 
+    \item Find $\big[x^7\big] \dfrac{1}{x^2 + 3x + 2}$.\par 
+    \textit{Solution.} We begin by finding real numbers $A$ and $B$ such that $\dfrac{1}{x^2+3x+2} = \dfrac{A}{x+1} + \dfrac{B}{x+2}$.\footnote{Don't forget how to factorize!}\par 
+    Multiplying both sides by the LCD gives us\[
+        1 = A(x+2) + B(x+1).    
+    \] We can then solve for $A$ and $B$.\begin{itemize} 
+        \item When $x=-1$, $1 = A(-1+2) + B(0)$, so $A=1$. 
+        \item When $x=-2$, $1 = A(0) + B(-2+1)$, so $B=-1$. 
+    \end{itemize} Thus, $\dfrac{1}{x^2 + 3x + 2} = \dfrac{1}{x+1} - \dfrac{1}{x+2}$. We can substitute this and solve for $\big[x^7\big]$.\begin{align*} 
+        \big[x^7\big] \frac{1}{x^2 + 3x + 2} &= \big[x^7\big] \frac{1}{x+1} - \big[x^7\big] \frac{1}{x+2} = \big[x^7\big] \frac{1}{1+x} - \big[x^7\big] {(x+2)}^{-1} \\ 
+        &= {(-1)}^7 - \binom{-1}{7} 1^7 2^{7-(-1)} = -1 - {(-1)}^7 \binom{7}{7} 2^8 = -1 -(-256) = 255. \tag*{$\blacksquare$}
+    \end{align*} 
+    \item Find $\big[x^6\big] \dfrac{1}{x^3 + 2x^2 + x}$. 
+    \item Find $\big[x^8\big] \dfrac{1-4x}{(1-x)(1+x)x}$. 
+    \item Find $\big[x^4\big] \dfrac{x}{{(5-x)}^3}$.
+\end{enumerate}
+
+\pagebreak
+\section*{4.2.1: Counting with Generating Functions} 
+\textit{Some of these are kinda tricky to figure out, so be sure to go over the examples (here and in the handout) if you really want to understand how its done. I'll 
+try my very best to explain them well!}\par
+\parindent=25pt\transparent{0.5}
+    \colorbox{CornflowerBlue}{
+    \transparent{1.0}
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        For items \#1 to \#4, we don't need to actually solve what the problem is asking for, just give the generating function and the required coefficient.
+    \end{minipage}
+    }\transparent{1.0}
+\begin{enumerate}
+    \item Suppose you roll four 12-sided dice, and the four dice are distinct. How many ways are
+    there to roll a total of 30?\begin{solution} 
+        The generating function for rolling one 12-sided die is given by\[
+            x + x^2 + x^3 + \cdots + x^{12} = x(1+x+x^2 +\cdots x^{11}) = \frac{x(1-x^{12})}{1-x}.    
+        \] To get the generating function of rolling four distinct ones, we simply multiply each one. Then, to 
+        get the number of ways to roll a 30, we just find the coefficient of $x^{30}$.\par 
+        Therefore, there are $\big[x^{30}\big] {\bigg(\dfrac{x(1-x^{12})}{1-x} \bigg)}^4$ ways to roll a 30 with four 12-sided dice. 
+    \end{solution}
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} We've been dealing so much with infinite series that you might've forgotten the simplified formula for a finite one. Here it is:\[
+            1 + x + x^2 + x^3 + \cdots x^k = \sum_{n=0}^k x^n = \frac{1-x^{k+1}}{1-x}.     
+        \]
+    \end{minipage}%
+    }
+    \item Find the number of positive integer solutions to the equation $x_1 + x_2 + x_3 + \cdots + x_{10} = 50$ where $x_i$ is even if $i$ is even and $x_i$ is odd if $i$ is odd.\begin{solution} 
+        We can consider each $x_i$ as a ``box'' that we want to put our ``balls'' (which in this case are the integer values) into. Thus, we have 5 even-numbered boxes and 5 odd-numbered ones. To count the
+        number of ways to put only an even or odd amount of balls into each box, we use the following generating functions:\begin{align*} 
+            x^2 + x^4 + x^6 + \cdots = x^2(1 + x^2 + x^4 + \cdots) &= \frac{x^2}{1-x^2} &\text{for even-numbered solutions}\footnotemark \\
+            x + x^3 + x^5 + \cdots = x(1 + x^2 + x^4 + \cdots) &= \frac{x}{1-x^2} &\text{for odd-numbered solutions}
+        \end{align*} \footnotetext{We exclude the term containing $x^0$ because the question is asking for \textit{positive integer solutions}, and 0 is not positive.}
+        We raise both of these to 5 for each possible $x_i$ we can place our integers into. Then, we multiply them together and evaluate the coefficient of $x^{50}$.\par 
+        Thereofre, there are $\big[x^{50}\big] {\bigg(\dfrac{x^2}{1-x^2}\bigg)}^5 {\bigg(\dfrac{x}{1-x^2}\bigg)}^5 $ ways to solve this problem.
+    \end{solution} 
+    \item In how many different ways can eight identical cookies be distributed among three distinct
+    children if each child receives at least two cookies and no more than four cookies?\begin{solution}
+        Again, here, we can imagine cookies as balls and kids as boxes, but let's maybe quit it with the balls and boxes comparisons and just deal with kids and cookies \textit{qua} kids and cookies. 
+        The generating function for distributing a certain amount of identical cookies to one kid such that they only get between 2 and 4 cookies is given by\[
+            x^2 + x^3 + x^4,    
+        \] because there is one way to give them 2 cookies, one way to give them 3 cookies, and one way to give them 4 cookies. You \textit{can} represent 
+        this in its finite geometric series form,\[
+            x^2 + x^3 + x^4 = x^2(1+ x + x^2) = \frac{x^2(1-x^3)}{1-x},    
+        \] (in fact, I will) but its short enough that its really unnecessary. Then, we have three kids, so we simply raise this to 3 and get the coefficient of $x^8$ for eight cookies.\par 
+        Therefore, there are $\big[x^8\big] {\bigg(\dfrac{x^2(1-x^3)}{1-x}\bigg)}^3$ ways to distribute eight identical cookies to three distinct kids, such that each kid receives between two and four cookies. 
+    \end{solution}
+    \item Suppose you roll two 10-sided dice and two 12-sided dice, and the four dice are distinct.
+    How many ways are there to roll a total of 24?\begin{solution} 
+        The generating functions for rolling the given die are given by\begin{align*} 
+            x + x^2 + x^3 + \cdots x^{10} = x(1 + x + x^2 + \cdots x^9) &= \frac{x(1-x^{10})}{1-x} &\text{for 10-sided dice} \\ 
+            x + x^2 + x^3 + \cdots x^{12} = x(1 + x + x^2 + \cdots x^{11}) &= \frac{x(1-x^{12})}{1-x} &\text{for 12-sided dice}
+        \end{align*} We have two of each, so we square both and evaluate the coefficient of $x^{24}$.\par 
+        Therefore, there are $\big[x^{24}\big] {\bigg(\dfrac{x(1-x^{12})}{1-x}\bigg)}^2 {\bigg(\dfrac{x(1-x^{10})}{1-x}\bigg)}^2$ ways to roll a 24 with the given dice.
+    \end{solution} 
+    \transparent{0.5}
+    \colorbox{CornflowerBlue}{
+    \transparent{1.0}
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        For items \#5 to \#7, we have to actually evaluate the needed coefficient. Sorry! 
+    \end{minipage}
+    }\transparent{1.0}
+    \item Suppose you roll four 12-sided dice, and the four dice are distinct. How many ways are there to roll a total of 16?\begin{solution}
+        The generating function for rolling a 12-sided die is given by\[
+            x + x^2 + x^3 + \cdots + x^{12} = x(1+x+x^2 +\cdots x^{11}) = \frac{x(1-x^{12})}{1-x}.   
+        \] Then, since we have four distinct ones, we simply raise this to 4 and evaluate the coefficient of $x^{16}$.\begin{align*} 
+            \big[x^{16}\big] {\bigg(\frac{x(1-x^{12})}{1-x}\bigg)}^4 &= \big[x^{16}\big] \frac{x^4{(1-x^{12})}^4}{{(1-x)}^4} = \big[x^{12}\big] \frac{{(1-x^{12})}^4}{{(1-x)}^4} \\ 
+            &= \big[x^{12}\big] \frac{1-4x^{12}+6x^{24}-4x^{36}+ x^{48}}{{(1-x)}^4}.\footnotemark
+            \intertext{Here, we can cheat and cancel out the terms where $x^{12}$ won't appear.}
+            &= \big[x^{12}\big] \frac{1}{{(1-x)}^4} - 4 \cdot \big[x^{0}\big] \frac{1}{{(1-x)}^4} \\ 
+            &= \binom{-4}{12} {(-1)}^{12} - 4 \cdot \binom{-4}{0} {(-1)}^0 \\
+            &= {(-1)}^{12} \cdot \binom{15}{12} - 4 \cdot {(-1)}^0\cdot \binom{3}{0} = 455-4 = 451. 
+        \end{align*} \footnotetext{If you want a shortcut for expanding stuff like this, just remember the binomial theorem! $\binom{4}{0} = 1$, $\binom{4}{1} = 4$, etc.} Therefore, there are 451 ways to roll a 16 with four 12-sided dice. 
+    \end{solution} 
+    \item Suppose you roll four 10-sided dice, and the four dice are distinct. How many ways are there to roll a total of 24?\begin{solution} 
+        Here, we just follow the same procedure as above. The generating function for rolling a 10-sided die is given by\[
+            x + x^2 + x^3 + \cdots x^{10} = x(1 + x + x^2 + \cdots x^9) = \frac{x(1-x^{10})}{1-x}.          
+        \] We raise this to 4 since there are four distinct dice. Then, we evaluate the coefficient of $x^{24}$.\begin{align*} 
+            \big[x^{24}\big] {\bigg(\frac{x(1-x^{10})}{1-x}\bigg)}^4 &= \big[x^{24}\big] \frac{x^4{(1-x^{10})}^4}{{(1-x)}^4} = \big[x^{20}\big] \frac{{(1-x^{10})}^4}{{(1-x)}^4} \\ 
+            &= \big[x^{20}\big] \frac{1-4x^{10}+6x^{20}-4x^{30}+ x^{40}}{{(1-x)}^4}.
+            \intertext{Here, we can cheat and cancel out the terms where $x^{24}$ won't appear.}
+            &= \big[x^{20}\big] \frac{1}{{(1-x)}^4} - 4 \cdot \big[x^{10}\big] \frac{1}{{(1-x)}^4} + 6\cdot \big[x^{0}\big] \frac{1}{{(1-x)}^4} \\ 
+            &= \binom{-4}{20} {(-1)}^{20} - 4 \cdot \binom{-4}{10} {(-1)}^{10} + 6\cdot \binom{-4}{0} {(-1)}^6 \\
+            &= {(-1)}^{20} \cdot \binom{23}{20} - 4 \cdot {(-1)}^{10}\cdot \binom{13}{10} + 6\cdot {(-1)}^0 \binom{3}{0} = 633. 
+        \end{align*} Therefore, there are 633 ways to roll a 24 with four 10-sided dice. 
+    \end{solution} 
+    \item Determine the number of different ways 10 identical balloons can be given to four children if each child recevies at least two balloons.\begin{solution} 
+        The generating function for ways of giving kids identical balloons such that each child receives at least two is given by\[
+            x^2 + x^3 + x^4 + \cdots = x^2 (1+ x + x^2 + \cdots) = \frac{x^2}{1-x}.     
+        \] Then, since we have four children, we raise this to 4 and evaluate the coefficient of $x^{10}$.\begin{align*} 
+            \big[x^{10}\big] {\bigg(\frac{x^2}{1-x}\bigg)}^4 &= \big[x^{10}\big] \frac{x^8}{{(1-x)}^4} = \big[x^2\big] \frac{1}{{(1-x)}^4} \\
+            &= \binom{-4}{2} {(-1)}^2 = {(-1)}^2 \cdot \binom{5}{2} = 10. 
+        \end{align*} There are 10 ways to give 10 balloons to four children such that each receives at least two. 
+    \end{solution}
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} It's not immediately obvious why the generating function for distributing identical objects to distinct containers is $ 1 + x + x^2 + x^3 + \cdots$, but think of it like this. 
+        There is one way to give a child zero cookies, one way to give a child one cookie, one way to give a child two cookies, and so on. Thus, the sequence of ways to distribute is 1, 1, 1, 1, \ldots{}, which we already know the 
+        generating function for. 
+    \end{minipage}%
+    }\par 
+    \transparent{0.5}
+    \colorbox{CornflowerBlue}{
+    \transparent{1.0}
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        For items \#8 and \#9, we are asked to express the generating function in a closed form again, i.e.\ without any infinite summations.  
+    \end{minipage}
+    }\transparent{1.0}
+    \item Find a generating function whose coefficients determine the number of ways to insert tokens worth 1 peso, 2 pesos, and 5 pesos into a vending machine to pay for an item 
+    that costs $r$ pesos, assuming that the order in which the tokens are inserted does not matter.\begin{solution} 
+        The generating functions for ways of inserting tokens with the given values are given by\begin{align*} 
+            1 + x + x^2 + x^3 + x^4 + \cdots = \sum_{n=0}^\infty x^{n} &= \frac{1}{1-x}, &\text{for 1 peso} \\
+            1 + x^2 + x^4 + x^6 + x^8 + \cdots = \sum_{n=0}^\infty x^{2n} &= \frac{1}{1-x}, &\text{for 2 pesos} \\ 
+            1 + x^5 + x^{10} + x^{15} + x^{20} + \cdots = \sum_{n=0}^\infty x^{5n} &= \frac{1}{1-x}. &\text{for 5 pesos}
+        \end{align*} We multiply these together since they are each an option, then evaluate the coefficient of $x^r$.\par 
+        Therefore, the generating function is given by $\bigg(\dfrac{1}{1-x}\bigg) \bigg(\dfrac{1}{1-x^2}\bigg) \bigg(\dfrac{1}{1-x^5}\bigg)$ 
+    \end{solution} 
+    \item What is the generating function for the sequence $c_0, c_1, c_2, \hdots$ where $c_k$ represents the number of ways to make change for pesos using bills worth 10 pesos, 20 pesos, 50 pesos, and 100 pesos?\begin{solution} 
+        The generating functions for ways of making change using bills with the given values are given by\begin{align*} 
+            1 + x^{10} + x^{20} + x^{30} + \cdots = \sum_{n=0}^\infty x^{10n} &=\frac{1}{1-x^{10}} &\text{for 10 pesos} \\ 
+            1 + x^{20} + x^{40} + x^{60} + \cdots = \sum_{n=0}^\infty x^{20n} &=\frac{1}{1-x^{20}} &\text{for 20 pesos} \\
+            1 + x^{50} + x^{100} + x^{150} + \cdots = \sum_{n=0}^\infty x^{50n} &=\frac{1}{1-x^{50}} &\text{for 50 pesos} \\
+            1 + x^{100} + x^{200} + x^{300} + \cdots = \sum_{n=0}^\infty x^{100n} &=\frac{1}{1-x^{100}} &\text{for 100 pesos} 
+        \end{align*} Therefore, the generating function for $c_0, c_1, c_2, \hdots$ is all of these multiplied to each other.
+    \end{solution} 
+\end{enumerate}
+
+\pagebreak 
+\section*{4.2.2: Solving Recurrences}
+\textit{My favorite section, because of course it is. These use all prior techniques, plus some series manipulation. If sir's kind, there'll only be two of these on the test, one first-order and one second-order.}
+\begin{enumerate} 
+    \item $\begin{cases} a_0 = 3 & \\ a_n = 2a_{n-1}, & n\geq 1 \end{cases}$\par
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} I think a lot of people still don't quite understand how this recurrence thing works, so I'll try to explain the whole process in this
+        first item. A lot of the steps aren't really that intuitive. Of course, 
+        if you don't want to understand and just want to pass, then that's valid too. I guess you can just memorize what to do. To be honest, these are really all about practice.
+    \end{minipage}%
+    }
+    \begin{solution} 
+        We can express all the terms of $a_n$ as a generating function, $G(x)$, where \[\
+            G(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots = \displaystyle{} \sum_{n=0}^\infty a_n x^n .
+        \] We do this because we want to eventually \textbf{generalize} a way to solve for $a_n$ without having to go through all the previous terms. After 
+        all, the first rule of induction/recursion is to never actually go through all its steps. Right now, however, the generating function $G(x)$ is still a mystery, which is why
+        we need to use the recurrence identity and infinite sums to give it a closed-form expression.\par 
+        Then, since we have the equality $a_n = 2a_{n-1}$, we can multiply both sides by $x^n$ and get the sum of all the terms over $n\geq 1$. We do this so we can eventually solve for $G(x)$, itself an infinite series.\begin{align*} 
+            a_n x^n &= 2a_{n-1} x^n \\
+            \sum_{n=1}^\infty a_n x^n &= \sum_{n=1}^\infty 2a_{n-1} x^n 
+            \intertext{Here, we need to use series manipulation techniques. The handouts are pretty good at explaining them, but I'll show them as clearly as possible regardless.}
+            \sum_{n=1}^\infty a_n x^n &= 2\sum_{n=1}^\infty a_{n-1} x^n \\
+            a_1 x + a_2 x^2 + a_3 x^3 + \cdots &= 2(a_0 x + a_1 x^2 + a_2 x^3 + \cdots ) &\text{expanding the series} \\
+            (a_0 + a_1 x + a_2 x^2 + \cdots) - a_0 &= 2\cdot x(a_0 + a_1 x + a_2 x^2 + \cdots) &\text{factoring out}~x 
+            \intertext{Now, we see that the series inside parentheses are equivalent to $G(x)$, so we can substitute.}
+            G(x) - a_0 &= 2x \:G(x) \\ 
+            G(x) - 3 &= 2x \:G(x) &\text{substituting}~a_0 =3 \\
+            G(x) - 2x \:G(x) &= 3 &\text{isolating}~G(x) \\ 
+            G(x) \:(1-2x) &= 3 \\ 
+            G(x) &= \frac{3}{1-2x}.
+        \end{align*} Now, to get a generalized formula for $a_n$, all we have to do is find the coefficient of some arbitrary $x^n$ in $G(x)$, since we've already established 
+        that $G(x) = a_0 + a_1 x + a_2 x^2 + \cdots$.\[
+            \big[x^n\big] \frac{3}{1-2x} = 3\cdot \big[x^n\big] \frac{1}{1-2x} = 3 \cdot 2^n.    
+        \] Therfore, \fbox{$a_n = 3\cdot 2^n ,\forall n\in \mathbb{N}$} when $a_0 = 3$ and $a_n = 2a_{n-1}$ if $n\geq 1$. 
+    \end{solution} 
+    \item $\begin{cases} a_0 = 2 & \\ a_n = 3a_{n-1} -1, & n\geq 1 \end{cases}$\begin{solution} 
+        We can express all the terms of $a_n$ as a generating function, $G(x)$, where \[
+            G(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots = \displaystyle{} \sum_{n=0}^\infty a_n x^n .
+        \] Then, we begin by multiplying $x^n$ to $a_n = 3a_{n-1} -1$ and summing it for all terms $n\geq 1$.\begin{align*} 
+            a_n x^n &= 3a_{n-1} x^n -1 x^n \\
+            \sum_{n=1}^\infty a_n x^n &= \sum_{n=1}^\infty 3 a_{n-1} x^n - \sum_{n=1}^\infty x^n
+            \intertext{Notice here that the $-1$ becomes a series as well. Remember, we want to turn \textit{all} the terms into series, otherwise
+            the equality will not hold. Now we can do our series manipulation.} 
+            \sum_{n=1}^\infty a_n x^n &= 3 \sum_{n=1}^\infty a_{n-1} x^n - \sum_{n=1}^\infty x^n \\
+            \sum_{n=0}^\infty a_n x^n - a_0 &= 3x \sum_{n=1}^\infty a_{n-1} x^{n-1} - x \sum_{n=1}^\infty x^{n-1} \\
+            \sum_{n=0}^\infty a_n x^n - a_0 &= 3x \sum_{n=0}^\infty a_{n} x^{n} - x \sum_{n=0}^\infty x^{n} &\text{realigning the series}\\
+            G(x) - 2 &= 3x \: G(x) - x \cdot \frac{1}{1-x} &\text{substituting values} \\
+            G(x) - 3x \: G(x) &= \frac{-x}{1-x} + 2 &\text{isolating}~G(x) \\
+            G(x) \:(1-3x) &= \frac{-x + 2 -2x}{1-x} \\ 
+            G(x) &= \frac{-3x+2}{(1-x)(1-3x)}.
+        \end{align*} Now we just solve for the coefficient of an arbitrary term $x^n$ to get a formula for the recurrence.\par
+        Let $A$ and $B$ be real numbers such that\begin{align*} 
+            \frac{-3x+2}{(1-x)(1-3x)} &= \dfrac{A}{1-x} + \dfrac{B}{1-3x} \\
+            -3x+2 &= A(1-3x) + B(1-x).
+        \end{align*}\begin{itemize} 
+            \item When $x=1$, $-1 = A(1-3) + B(0)$, so $A=\dfrac{1}{2}$. 
+            \item When $x=\dfrac{1}{3}$, $1= A(0) + B\bigg(\dfrac{2}{3}\bigg)$, so $B= \dfrac{3}{2}$.
+        \end{itemize} Thus, substituting the partial fraction decomposition to find the coefficient of $x^n$,\begin{align*} 
+            \big[x^n\big] \frac{-3x+2}{(1-x)(1-3x)} &= \big[x^n\big]\frac{1}{2(1-x)} + \big[x^n\big]\frac{3}{2(1-3x)} \\
+            &= \frac{1}{2} \cdot \big[x^n\big] \frac{1}{1-x} + \frac{3}{2} \cdot \big[x^n\big] \frac{1}{1-3x} = \frac{1}{2} + \frac{3}{2} \cdot 3^n = \frac{3^{n+1} +1}{2}. 
+        \end{align*} Therefore, \fbox{$a_n = \dfrac{3^{n+1} +1}{2} ,~\forall n\in \mathbb{N}$} when $a_0 = 2$ and $a_n = 3a_{n-1} - 1$ if $n\geq 1$. 
+    \end{solution}
+    \item $\begin{cases} a_0 = 4 & \\ a_1 = 8 & \\ a_n = 2a_{n-1} + 3a_{n-2}, & n \geq 2 \end{cases}$\begin{solution} 
+        We can express all the terms of $a_n$ as a generating function, $G(x)$, where \[
+            G(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots = \displaystyle{} \sum_{n=0}^\infty a_n x^n .
+        \] Then, we begin by multiplying $x^n$ to $a_n = 2a_{n-1} + 3a_{n-2}$ and summing it for all terms $n\geq 2$.\begin{align*} 
+            a_n x^n &= 2a_{n-1} x^n + 3a_{n-2} x^n \\
+            \sum_{n=2}^\infty a_n x^n &= \sum_{n=2}^\infty 2a_{n-1} x^n + \sum_{n=2}^\infty 3a_{n-2} x^n \\
+            a_2 x^2 + a_3 x^3 + a_4 x^4 \cdots &= 2x \sum_{n=2}^\infty a_{n-1} x^{n-1} + 3x^2 \sum_{n=2}^\infty a_{n-2} x^{n-2} &\text{expanding the series} \\ 
+            (a_0 + a_1 x + a_2 x^2 + \cdots ) - a_1 x - a_0 &= 2x \sum_{n=1}^\infty a_{n} x^{n} + 3x^2 \sum_{n=0}^\infty a_n x^n \\
+            \sum_{n=0}^\infty a_n x^n - a_1 x - a_0 &= 2x \Bigg(\sum_{n=0}^\infty a_n x^n - a_0\Bigg) + 3x^2 \sum_{n=0}^\infty a_n x^n 
+            \intertext{Now we can substitute our known values.}
+            G(x) - 8x - 4 &= 2x\big(G(x) - 4) + 3x^2 \: G(x) \\
+            G(x) - 8x - 4 &= 2x\:G(x) - 8x + 3x^2 \: G(x) \\
+            G(x) - 2x\: G(x) - 3x^2 \: G(x) &= 8x - 8x + 4 &\text{isolating}~G(x)\\
+            G(x) \:(1-2x-3x^2) &= 4 \\ 
+            G(x) &= \frac{4}{1-2x-3x^2} = \frac{4}{(1+x)(1-3x)}.
+        \end{align*} Now we just solve for the coefficient of an arbitrary term $x^n$ to get a formula for the recurrence.\par 
+        Let $A$ and $B$ be real numbers such that\begin{align*} 
+            \frac{4}{(1+x)(1-3x)} &= \frac{A}{1+x} + \frac{B}{1-3x} \\ 
+            4 &= A(1-3x) + B(1+x).
+        \end{align*}\begin{itemize} 
+            \item When $x=-1$, $4 = A(4) + B(0)$, so $A= 1$.
+            \item When $x=\dfrac{1}{3}$, $4 = A(0) + B\bigg(\dfrac{4}{3}\bigg)$, so $B=3$. 
+        \end{itemize} Thus, substituting the partial fraction decomposition to find the coefficient of $x^n$,\begin{align*} 
+            \big[x^n\big] \frac{4}{(1+x)(1-3x)} &= \big[x^n\big] \frac{1}{1+x} + \big[x^n\big]\frac{3}{1-3x} \\ 
+            & = {(-1)}^n + 3\cdot 3^n = 3^{n+1} + {(-1)}^n. 
+        \end{align*} Therefore, \fbox{$a_n = 3^{n+1} + {(-1)}^n ,~ \forall n\in \mathbb{N}$} when $a_0 =4$, $a_1 = 8$, and $a_n = 2a_{n-1} + 3a_{n-2}$ if $n\geq 2$.  
+    \end{solution} 
+    \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} There are two ways to check your answers: (a) substitute values and check if they match, or (b) proving by induction! The first method 
+        is very straightforward, so I won't bother showing that. The second method is Very Cool so I will show it, but again, feel free to skip over this next section. It's a lot 
+        easier to just do it the first way. 
+    \end{minipage}%
+    }\par
+    \parindent=-25pt \fbox{\begin{minipage}[t]{0.98\textwidth}
+        \vspace{0pt} 
+        \textbf{Can we Prove it?} Prove that $a_n = \left. \begin{cases} a_0 = 4 & \\ a_1 = 8 & \\ a_n = 2a_{n-1} + 3a_{n-2}, & n \geq 2 \end{cases} \right\} = 3^{n+1} + {(-1)}^n$.\begin{proof} 
+            We proceed by strong induction\footnote{We use strong induction because this is a second-order recurrence, so we need to assume $P(n-2)$ is true and not just $P(n-1)$. If it were just a first-order one, we could get away with
+            just plain, ordinary induction.} on $n$. Let $P(n)$ be \[a_n = 3^{n+1} + {(-1)}^n,~\forall n \in \mathbb{N}.\] 
+            \textbf{Base Case.} If $n=0$, then we have $3^1 + 1 = 4$. If $n=1$, then we have $3^2 -1 = 8$.\par 
+            \textbf{Inductive Step.} Assume that $P(n-1)$ and $P(n-2)$ are true, by strong induction.\begin{align*} 
+                a_n &= 2a_{n-1} + 3a_{n-2},~n \geq 2 &\text{by definition} \\
+                &= 2\big(3^{n-1+1} + {(-1)}^{n-1}\big) + 3\big(3^{n-2+1} + {(-1)}^{n-2}\big) &\text{by the inductive hypothesis} \\ 
+                &= 2\big(3^{n} + {(-1)}^{n-1}\big) + 3\big(3^{n-1} + {(-1)}^{n-2}\big) \\
+                &= 2\cdot 3^n + 2\cdot {(-1)}^{n-1} + 3^n + 3{(-1)}^{n-2} \\
+                &= 2\cdot 3^n + 3^n + 2\cdot {(-1)}^{n-1} + 3{(-1)}^{n-2} \\ 
+                &= 3\cdot 3^n + 2 \cdot (-1) \cdot {(-1)}^{n-2} + 3{(-1)}^{n-2} \\ 
+                &= 3^{n+1} + {(-1)}^{n-2}
+                \intertext{We can see that if $n$ is even, then $n-2$ is even. This is also true if $n$ is odd. Thus, ${(-1)}^{n-2} = {(-1)}^n$. }
+                &= 3^{n+1} + {(-1)}^n.
+            \end{align*} Therefore, by strong induction, $a_n = 3^{n+1} + {(-1)}^n,~\forall n \in \mathbb{N}$.
+        \end{proof} 
+    \end{minipage}%
+    }
+    \item $\begin{cases} a_0 = 3 & \\ a_1 = 5 & \\ a_n = 2a_{n-1} - a_{n-2}, & n\geq 2\end{cases}$\begin{solution} 
+        We can express all the terms of $a_n$ as a generating function, $G(x)$, where \[
+            G(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots = \displaystyle{} \sum_{n=0}^\infty a_n x^n .
+        \] Then, we begin by multiplying $x^n$ to $a_n = 2a_{n-1} - a_{n-2}$ and summing it for all terms $n\geq 2$.\begin{align*} 
+            \sum_{n=2}^\infty a_n x^n &= \sum_{n=2}^\infty 2a_{n-1} x^n - \sum_{n=2}^\infty a_{n-2} x^n \\ 
+            \sum_{n=0}^\infty a_n x^n - a_1 x - a_0 &= 2x\sum_{n=2}^\infty a_{n-1} x^{n-1} - x^2 \sum_{n=2}^\infty a_{n-2} x^{n-2} \\
+            \sum_{n=0}^\infty a_n x^n - a_1 x - a_0 &= 2x\sum_{n=1}^\infty a_n x^n - x^2 \sum_{n=0}^\infty a_{n} x^{n} \\
+            \sum_{n=0}^\infty a_n x^n - a_1 x - a_0 &= 2x\Bigg(\sum_{n=0}^\infty a_{n} x^{n} - a_0 \Bigg) - x^2 \sum_{n=0}^\infty a_{n} x^{n} 
+            \intertext{Now we can substitute our known values.} 
+            G(x) - 5x - 3 &= 2x \big(G(x) - 3\big) - x^2 \: G(x) \\
+            G(x) - 2x\: G(x) + x^2 \: G(x) &= -6x + 5x + 3 \\
+            G(x) \: (x^2 - 2x + 1) &= 3-x \\
+            G(x) &= \frac{3-x}{x^2 - 2x +1} = \frac{3-x}{{(x-1)}^2}. 
+        \end{align*} Now we just solve for the coefficient of an arbitrary term $x^n$ to get a formula for the recurrence.\par
+        \parindent=0pt Let $A$ and $B$ be real numbers such that\begin{align*} 
+            \frac{3-x}{{(x-1)}^2} &= \frac{A}{x-1} + \frac{B}{{(x-1)}^2} \\
+            3-x &= A(x-1) + B.
+        \end{align*}\begin{itemize} 
+            \item When $x=1$, $2 = A(0) + B$, so $B = 2$. 
+            \item Substituting this into the equation and letting $x=0$, we have $3 = A(-1) + B$, so $A=-1$. 
+        \end{itemize} Thus, substituting the partial fraction decomposition to find the coefficient of $x^n$,\begin{align*} 
+            \big[x^n\big] \frac{3-x}{{(x-1)}^2} &= \big[x^n\big]\frac{-1}{x-1} + \big[x^n\big]\frac{2}{{(x-1)}^2} \\ 
+            &= \big[x^n\big]\frac{-1}{-(1-x)} + 2\cdot \big[x^n\big] {(x-1)}^{-2} \\
+            &= 1 + 2\cdot \binom{-2}{n} {(-1)}^{-2-n} = 1 + 2 \cdot \binom{n+1}{n} = 2n+3. 
+        \end{align*} Therefore, \fbox{$a_n = 2n+3,~\forall n \in \mathbb{N}$} when $a_0=3$, $a_1=5$, and $a_n = 2a_{n-1} - a_{n-2}$ if $n\geq 2$. 
+    \end{solution}
+    \renewcommand{\labelenumi}{\fcolorbox{magenta}{white}{\textbf{\arabic{enumi}}}}
+    \parindent=2.5pt \begin{minipage}[t]{.14\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=2cm]{nerd_maddy.png} 
+    \end{minipage}%
+    \fbox{
+    \begin{minipage}[t]{.76\textwidth}
+        \vspace{0pt}
+        \textbf{Nerd Interjection!} Fuck this problem. Don't try to solve this problem. I was foolish enough to make that mistake, and I went crazy. The worst part about it is that when I finally did solve it, 
+        I couldn't believe it. It was the ugliest formula I'd ever seen. Then, I substituted values, and lo and behold, it was correct. And it gave the ugliest sequence of numbers I've ever seen. 
+        Don't solve this problem. It won't show up on the test.  
+    \end{minipage}%
+    }\par
+    \item $\begin{cases} a_0 = -1 & \\ a_n = -\dfrac{1}{3}a_{n-1} + \dfrac{n+1}{3^n},&n\geq 1 \end{cases}$\begin{solution} 
+        We can express all terms of $a_n$ as a generating function, $G(x)$, where\[
+            G(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots = \sum_{n=0}^\infty a_n x^n .
+        \] Then, we begin by multiplying $x^n$ to $a_n = -\dfrac{1}{3}a_{n-1} + \dfrac{n+1}{3^n}$ and summing it for all terms $n\geq 1$.\begin{align*} 
+            \sum_{n=1}^\infty a_n x^n &= -\sum_{n=1}^\infty \frac{1}{3} a_{n-1} x^n + \sum_{n=1}^\infty (n+1) {\bigg(\frac{x}{3}\bigg)}^n \\ 
+            \sum_{n=0}^\infty a_n x^n - a_0 &= -\frac{x}{3} \sum_{n=1}^\infty a_{n-1} x^{n-1} + \sum_{n=1}^\infty \binom{n+1}{n} {\bigg(\frac{x}{3}\bigg)}^n 
+            \intertext{Here, we're making use of the identity that $\displaystyle{}\binom{n}{n-1} = n$.} 
+            \sum_{n=0}^\infty a_n x^n - a_0 &= -\frac{x}{3} \sum_{n=0}^\infty a_{n} x^{n} + \sum_{n=1}^\infty \binom{-2}{n} {(-1)}^n {\bigg(\frac{x}{3}\bigg)}^n 
+            \intertext{What just happened? Well, recall that $\displaystyle{} \binom{n+r-1}{r} {(-1)}^r = \binom{-n}{r}$. We can multiply ${(-1)}^r$ to both 
+            sides to give us $\displaystyle{} \binom{n+r-1}{r} = \binom{-n}{r} {(-1)}^r$. Thus, $\displaystyle{}\binom{n+2-1}{n} =\binom{n+1}{n} = \binom{-2}{n}{(-1)}^n$.  }
+            \sum_{n=0}^\infty a_n x^n - a_0 &= -\frac{x}{3} \sum_{n=0}^\infty a_{n} x^{n} + \sum_{n=0}^\infty \binom{-2}{n}  {\bigg(-\frac{x}{3}\bigg)}^n - 1 
+            \intertext{We subtract 1 here because it's the first term of the given binomial expansion, and we want to align the beginning index $n$ back to 0. Then, we simply 
+            express these in their closed-forms, or substitute known values.}
+            G(x) + 1 &= -\frac{x}{3} \: G(x) + {\bigg(1-\frac{x}{3} \bigg)}^{-2} - 1 \\
+            G(x) + \frac{x}{3} \: G(x) &= \frac{1}{{\bigg(1-\dfrac{x}{3} \bigg)}^2} - 2 \\
+            G(x) \: \bigg(1+\frac{x}{3} \bigg) &= \frac{-1 + \dfrac{4x}{3} - \dfrac{2x^2}{9}}{{\bigg(1-\dfrac{x}{3} \bigg)}^2} \\
+            G(x) &= \frac{-1 + \dfrac{4x}{3} - \dfrac{2x^2}{9}}{{\bigg(1-\dfrac{x}{3} \bigg)}^2 \bigg(1+\dfrac{x}{3}\bigg)}. 
+        \end{align*} What a perfectly approachable, normal-looking generating function! Let's find its partial fraction decomposition, because of course we aren't done yet!\par 
+        \parindent=0pt Let $A$, $B$, and $C$ be real numbers such that\begin{align*} 
+            \frac{-1 + \dfrac{4x}{3} - \dfrac{2x^2}{9}}{{\bigg(1-\dfrac{x}{3} \bigg)}^2 \bigg(1+\dfrac{x}{3}\bigg)} &= \frac{A}{1+\dfrac{x}{3}} + \frac{B}{1-\dfrac{x}{3}} + \frac{C}{{\bigg(1-\dfrac{x}{3}\bigg)}^2} \\ 
+            -1 + \frac{4x}{3} - \frac{2x^2}{9} &= A{\bigg(1-\frac{x}{3}\bigg)}^2 + B\bigg(1+\frac{x}{3}\bigg) \bigg(1-\frac{x}{3}\bigg) + C\bigg(1+\frac{x}{3}\bigg).
+        \end{align*}\begin{itemize} 
+            \item When $x=3$, $-1 + 4 -2 = 2C$, so $C=\dfrac{1}{2}$. 
+            \item When $x=-3$, $-1-4-2 = 4A$, so $A=-\dfrac{7}{4}$. 
+            \item Substituting $A$ and $C$ into the original equation and setting $x$ to 0 gives us $B= \dfrac{1}{4}$.
+        \end{itemize} Thus, substituting the partial fraction decomposition to find the coefficient of $x^n$,\begin{align*}
+            \big[x^n\big] \frac{-1 + \dfrac{4x}{3} - \dfrac{2x^2}{9}}{{\bigg(1-\dfrac{x}{3} \bigg)}^2 \bigg(1+\dfrac{x}{3}\bigg)} &= - \frac{7}{4} \big[x^n\big] \frac{1}{1+\dfrac{x}{3}} + \frac{1}{4} \big[x^n\big] \frac{1}{1-\dfrac{x}{3}} + \frac{1}{2} \big[x^n\big] \frac{1}{{\bigg(1-\dfrac{x}{3}\bigg)}^2} \\
+            &= -\frac{7}{4} \cdot {\bigg(-\frac{1}{3}\bigg)}^n + \frac{1}{4} {\bigg(\frac{1}{3}\bigg)}^n + \frac{1}{2} \binom{-2}{n} {\bigg(-\frac{1}{3}\bigg)}^n \\ 
+            &= {(-1)}^{n+1} \frac{7}{4\cdot 3^n} + \frac{1}{4\cdot 3^n} + \frac{1}{2} \binom{n+1}{n} \frac{1}{3^n} \\
+            &= \frac{1+7{(-1)}^{n+1}}{4\cdot 3^n} + \frac{n+1}{2\cdot 3^n} = \frac{2n+3+{(-7)}^{n+1}}{4\cdot 3^n}.  
+        \end{align*} Therefore, \fbox{$a_n = \dfrac{2n+3+{(-7)}^{n+1}}{4\cdot 3^n},~\forall n \in \mathbb{N}$} when $\begin{cases} a_0 = -1 & \\ a_n = -\dfrac{1}{3}a_{n-1} + \dfrac{n+1}{3^n},&n\geq 1 \end{cases}$. 
+    \end{solution} 
+    \parindent=-25pt \fbox{\begin{minipage}[t]{0.98\textwidth}
+        \vspace{0pt} 
+        \textbf{Can we Prove it?} I need to show that this is correct, if only for my sanity.\par 
+        Prove that $a_n = \left. \begin{cases} a_0 = -1 & \\ a_n = -\dfrac{1}{3}a_{n-1} + \dfrac{n+1}{3^n},&n\geq 1 \end{cases} \right\} = \dfrac{2n+3+{(-7)}^{n+1}}{4\cdot 3^n}$.\begin{proof} 
+            We proceed by induction on $n$. Let $P(n)$ be\[
+                a_n = \frac{2n+3+{(-7)}^{n+1}}{4\cdot 3^n}.   
+            \]\textbf{Base Case.} If $n=0$, then we have $\dfrac{0+3+{(-7)}^1}{4\cdot 3^0} = -1$.\par 
+            \textbf{Inductive Step.} Assume that $P(n-1)$ is true. Then,\begin{align*} 
+                a_n &= -\frac{1}{3}a_{n-1} + \frac{n+1}{3^n} &\text{by definition} \\ 
+                &= -\bigg(\frac{1}{3}\bigg) \frac{2(n-1)+3+{(-7)}^n}{4\cdot 3^{n-1}} + \frac{n+1}{3^n} &\text{by the inductive hypothesis} \\
+                &= - \frac{2n+1+{(-7)}^n}{4\cdot 3^n} + \frac{n+1}{3^n} \\ 
+                &= \frac{-2n-1+7{(-1)}^n{(-1)}}{4\cdot 3^n } + \frac{4n+4}{4\cdot 3^n} \\
+                &= \frac{2n+3+{(-7)}^{n+1}}{4\cdot 3^n}.  
+            \end{align*} Therefore, by induction, $a_n = \left. \begin{cases} a_0 = -1 & \\ a_n = -\dfrac{1}{3}a_{n-1} + \dfrac{n+1}{3^n},&n\geq 1 \end{cases} \right\} = \dfrac{2n+3+{(-7)}^{n+1}}{4\cdot 3^n}$.
+        \end{proof} 
+    \end{minipage}
+    }
+\end{enumerate} 
+\end{document}
